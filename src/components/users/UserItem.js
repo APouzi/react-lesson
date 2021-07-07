@@ -1,38 +1,22 @@
-//Getting Started With Component State - 1:40 and we are going to generate a class based component with RCE shortcut. Now, one thing that this does is it adds an export at the top and bottom, which we don't need the top one.
-import React, { Component } from "react";
+//Stateless Functional Components - 1:26 we no longer need this "component"
+import React from "react";
+//Stateless Functional Components - 5:12 Now we do have the user Prop being passed in the UserItem arrow function. So we should add that to prop types. So I'm going to import prototypes.
+import Proptypes from 'prop-types';
 
-class UserItem extends Component {
-// //Getting Started With Component State - 2:29 Now, there's a couple of ways to add state to a class based component. You can use a constructor if you need to. I wouldn't recommend it unless you need to use a constructive for something else. Basically, it's just a function that's going to run when the component runs. and it would require you to use the "super()" function for it to run.
-//   constructor() {
-//     super();
-//     console.log(123);
-// //Getting Started With Component State - 3:12 We could specify our state in here with the a JS object, grab the url from the api "https://api.github.com/users" since we are only hard coding this. later on we will be fetching this through HTTP.
-//     this.state = {
-//       id: "id",
-//       login: "jombo",
-//       avatar_url: "https://avatars.githubusercontent.com/u/1?v=4",
-//       html_url: "https://github.com/mojombo",
-//     };
+// class UserItem extends Component {
+//Stateless Functional Components - 00:39 first we are going to be refactoring this classbased function into a functional based component, first we comment out the class based version of the component and then just simply replace it with a function. We could just do a "function UserItem() {.." but instead, brad like to use the arrow functions "const UserItem = () =>"
 
-//Getting Started With Component State - 7:07 We don't actually need a constructor to define our state,  so what we could do is comment out the code and under that, we can post the simplier version. We get the same result as above, with constructor. 
-    // state = {
-    //     id: "id",
-    //     login: "jombo",
-    //     avatar_url: "https://avatars.githubusercontent.com/u/1?v=4",
-    //     html_url: "https://github.com/mojombo"
-    // };
-//Lists & Passing State With Props - 4:34 Since we hardcoded the user into state, we want to comment that out, so loop actually works and is not being overwritten. Instead, we don't want state, we want props, since that is what the user is being passed in as. 
+//Stateless Functional Components - 4:13 So instead of destructing the props in the function, we can destructer it in the parameter, by taking out the user from props and then taking out the specific data from the user. Then obviously remove the "const { login, avatar_url, html_url} = props.user;" below. (4:35 go to Navbar.js) 
+const UserItem = ({user : {login, avatar_url, html_url}}) => {
 
-  render() {
-// //Getting Started With Component State - 7:25 we keep repeating "this.state" in the code below, what we could do instead is use a destructure, or pull the values out of the state. So what we could do is "const {}", And what the curly braces signify is just destruction, it pulling stuff out from that object, and to pull out what we want is by passing in what we want (login, avatar_url, html_url). Then we can get rid of the "this.state" in the curely braces, it just looks neater. in the next video, we are going to create a users component to warp and loop through all the different useritems (END OF VIDEO)
-//     const { login, avatar_url, html_url} = this.state;
 
-//Lists & Passing State With Props - 4:49  Instead of pulling these values from this.state, I can now pull them from this.props.user, because we passed in a prop of user. so we comment out the statement above and have the statement below. (6:10 go to Users.js)
-    const { login, avatar_url, html_url} = this.props.user;
+//Stateless Functional Components - 1:09 since it's a function, we don't need the render, so remove that and it's brackets. 
+  // render() {
+
+//Stateless Functional Components - 1:36 Now that we are not using class, we don't use "this" keyword, props are now going to be passed into the function parameters: "const UserItem = (props) =>...". We will come back later to add a prop type, since we have a user prop. (2:15 go to Navbar.js)
+    // const { login, avatar_url, html_url} = props.user;
     
     return (
-//Getting Started With Component State - 1:54 let's just output UserItem like that just so we can bring it into our app and output it, just so we can bring it into our App.js (1:59 go to App.js)
-//Getting Started With Component State - 4:05 so we have the stuff in our state, lets use it. First lets add a classname of "card text-center". Now we are going to be pulling in the Avatar, when we want to use something from state, we are going to to use "this.state.avatar_url" for the image, with the className = 'round-img'. 4:54 You might want to add inline style as well, and you can do that in react by using double curly braces, you can't use two words, like background-color, instead use backgroundColor, and you would use a string of "red", so it's different to regular CSS. 5:52 underneath the image, h3 tag with the login.Under that, have a div with an a tag, that is going to have an href of the home_url, or profile. All of this is stored in the COMPONENTENT LEVEL STATE. 
       <div className="card text-center">
         <img
           src={avatar_url}
@@ -44,7 +28,11 @@ class UserItem extends Component {
         <div><a href={html_url} className = "btn btn-dark btn-sm my-1"> More </a></div>
       </div>
     );
-  }
+  // }
 }
 
+//Stateless Functional Components - 5:18 Here we will say UserItem.Proptypes. Now, the the user prop that's being passed in here is an object. So we need to set user to a proptype object, it is required. For React Redux snippets extension, I can use "ptor" to have the object be required, we can do "ptar" for it to be an array required. (END OF VIDEO)
+UserItem.Proptypes = {
+  user: PropTypes.object.isRequired,
+}
 export default UserItem;
