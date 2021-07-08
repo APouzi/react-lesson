@@ -35,3 +35,5 @@ import '@testing-library/jest-dom';
 // Events & Search Component - 00:00 Now we work on the search form component. (00:22 create Search.js, go to it.)
 
 // Passing Props Up & Search - 00:00 so now we want to be able to search for users based on what we enter in our in our search form. So with the GitHub API, we can make a request to the endpoints of search/users and then we can add a parameter of "q", which is the query string that we want to search for, and that would be whatever we put in the input field. So the way that we want to do this, I mean, we could put it in our search component, but I want to have everything centralized in our App.js (00:34 go to Search.js)
+
+//Clear Users From State - 00:00  What I like to do is have a clear button here so that we can just kind of set the state back to its default, its default state of just an empty array and they only want the clear button to show if there's users in the state. when we first come to the page, it should not be a clear button, So we need to add that functionality as well. (00:33 go to Search.js)

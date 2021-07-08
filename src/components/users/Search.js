@@ -11,8 +11,11 @@ export class Search extends Component {
   };
 
 //Passing Props Up & Search - 7:47 input the proptypes here, and have it so that searchUsers is a function required only. 
+//Clear Users From State - 3:55  add the showClear proptype which is a bool required, scroll down to button tag
 static propTypes = {
   searchUsers: PropTypes.func.isRequired,
+  clearUsers: PropTypes.func.isRequired,
+  showClear: PropTypes.bool.isRequired,
 }
 
 
@@ -34,6 +37,10 @@ onChange =(e) => {
 
 
   render() {
+//Clear Users From State - 5:20  Here we will destructure our stuff. Now we can turn "this.props.clearUsers" to "clearUsers" and "this.props.showClear" to "showClear". (6:35 go to App.js to destructure there.)
+const {showClear, clearUsers} = this.props;
+
+
     return (
       <div>
 {/*Events & Search Component - 5:26  we're going to want in onSubmit, because right now we can just enter text into the into the field. so have that in the form field and have that equal to the "this.onSubmit" */}
@@ -53,6 +60,12 @@ onChange =(e) => {
             className="btn btn-dark btn-block"
           />
         </form>
+
+{/*Clear Users From State - 4:19 We are going to wrap the button in logic to make sure it's showing or not. So if showClear is true and put the "&&" in with the button, this is how we do if statements with these. Comment out the earlier code below. 5:20 lets pull out showClear and other methods from the props, scroll up */}
+{showClear && (<button className="btn btn-light btn-block" onClick = {clearUsers} >Clear</button>)}
+
+{/*Clear Users From State - 00:35 put in a button with a class of "btn btn-light btn-block", insde this tag we will have a Clear and then a "onClick = " method call, that will call a method that we will create later. Now all I want this to do is call a prop method, a function that's attached to prop "this.props.clearUsers". 1:11 Since this is a prop, we add this to our proptypes. 1:20 Now, remember, when we're calling this props, clear users, we're sending this up, right? So we have to catch it in our App.js (1:27 go to App.js)
+<button className="btn btn-light btn-block" onClick = {this.props.clearUsers} >Clear</button> */}
       </div>
     );
   }

@@ -45,7 +45,19 @@ searchUsers = async (text) => {
 }
 
 
+
+//Clear Users From State - 1:46 here we will input a clearUsers arrow function, this one is going to be simple since we are clearing out the state. For now, I set it to the users from Github. Later I will set it back to the clearing of users, that I commented out. FIX!! 2:19 he explains how everything is called.  2:57 We only want this to show, if there is actual users. There is a few ways to do this,  but for now lets create a prop and pass it off in Search, so scroll down.
+clearUsers = async () => {
+  this.setState({users: [], loading: false});
+  // const res = await axios.get('https://api.github.com/users');
+  // this.setState({users: [], loading: false});
+}
+
+
   render(){
+//Clear Users From State - 6:46 Here we decided to destructure users and loading. So instead of "this.state.loading" and "this.state.user", we just have "users" and "loading". Lastly we can turn "this.state.users.length" to "users.length". (END OF VIDEO)
+const {users, loading} = this.props;
+
   return (
 //Components, Props & PropTypes -  2:52 we also want to add a couple of class names to navbar and "bg-primary". This is working because of the custom CSS file we brought in, we could use Bootstrap or whatever we wanted to.(3:29 go to Navbar.js)
     <div className = 'App'>
@@ -61,12 +73,13 @@ searchUsers = async (text) => {
 {/*Lists & Passing State With Props - 7:42 Simply put a container right here and move the move users up into that container. (END OF VIDEO) */}
 
 {/*Events & Search Component - 1:49 here we will bring in Search, right above users and if we look at the site, it's there. 1:59 It doesn't do anything at all because we have no event or anything like that. Now, when we have a form in react, usually we're going to want to attach state to the input. (2:06 go to Search.js)   */}
-    <Search searchUsers = {this.searchUsers}/>
+    <Search searchUsers = {this.searchUsers} clearUsers = {this.clearUsers} showClear = {users.length > 0 ? true : false}/>
 {/*Passing Props Up & Search - 2:10 we are going to be passing the prop searchUsers, like we named it's going to point to a method in this file, so go above the method and create that method.*/}
-
+{/*Clear Users From State - 1:36 just like we did with the search users, we need to embed our props into the component. with a "clearUsers = {this.clearUsers}" then scroll up to create new method.*/}
+{/*Clear Users From State - 3:21 pass in the "showClear" prop, we will be passing in a terenary operator for the logic. Which will pass in true for the prop if there is more than 0 users showing, and false if not. (3:55 go to Search.js to add this proptype and method) */}
 
 {/*HTTP Requests & Updating State - 6:46 So now that we have those users in state, what we want to do is pass those down into our users component through props. Pass in loading = {this.state.loading} and user = {this.state.user}, 7:25 NOTE: if you are not getting data back from the api, you may have exhuasted your requests, which you get like 50, unless you get an API key. (8:03 go to Users.js) */}
-      <Users loading = {this.state.loading} users = {this.state.users}/>
+      <Users loading = {loading} users = {users}/>
     </div>
 
     </div>
