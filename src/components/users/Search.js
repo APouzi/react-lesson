@@ -1,15 +1,28 @@
 //Events & Search Component - 00:22 type in "rce" and write up the html. 1:28 save that and bring that to App.js (1:32 go to App.js)
 import React, { Component } from "react";
+//Passing Props Up & Search - 7:40 now we need to add searchUsers as a proptype.  So we need to import proptypes here
+import PropTypes from 'prop-types'
+
 
 export class Search extends Component {
 //Events & Search Component - 2:17 So we are going to create state object, have a field for text and it's going to be empty by default. 2:25 then we go to the input and put a "value = {this.state}"
   state = {
     text: "",
   };
+
+//Passing Props Up & Search - 7:47 input the proptypes here, and have it so that searchUsers is a function required only. 
+static propTypes = {
+  searchUsers: PropTypes.func.isRequired,
+}
+
+
 //Events & Search Component - 5:50 If we don't want to use Arrow functions, watch this video on what you would have to do. in short use them arrow functions.
 onSubmit = (e) => {
     e.preventDefault();
+//Passing Props Up & Search - 00:39 We have to pass this up to the main App components through props. So the way that we can do that is by creating a method called searchUsers and passing in "this.state.text", then we want to clear the form after, with a searchUsers() method we will create. 1:22 searchUsers doesn't actually exist right now, so we have to pass that into <Search /> as a prop, since we are calling "this.props.searchUsers", we want to pass in "his.state.text". 1:37 so instead of sending a prop down, we're actually sending a prop up and this is the problem with not using something like context or redux is you can start to get, you know, three or four levels deep and you're just it's called prop drilling. You're sending things up and down through props and it gets kind of messy and you're going to see that but then later on, I'm going to show you how we can fix it. (1:57 go to App.js)
     console.log(this.state.text)
+    this.props.searchUsers(this.state.text); 
+    this.setState({text: ''})
 }
 
 

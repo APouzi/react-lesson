@@ -35,6 +35,16 @@ state = {
     this.setState({users: res.data, loading: false})
  } 
 
+
+//Passing Props Up & Search - 2:33 create the searchUsers arrow method. Once this fires off, since we passed in "this.state.text", or the text inputted from the search, it will be passed into here. 3:06 reiteration by brad how this is all working! 3:39 Now we want to make a call to that endpoint that I showed you, and then we can add the query, which is similar to what we did up in the componentDidMount() method and 3:51 we need to use async await, since it's an arrow function, we will add async before the text, rather before the function. Then we are going to copy the res variable and this.setState as above, except in the url we are going to have a "search/users?q=${text}". NOTE 5:06 he comments out the componentDidMount function, then tries it out. you should note that Github api had an update, and we no longer query. So here on out, we are not going to be getting searches. Supposedly, this is solution: https://www.udemy.com/course/modern-react-front-to-back/learn/lecture/14969828#questions/13400350. 6:40 explain again how it all works, don't forget to set loading to true. (7:33 go to Search.js)
+searchUsers = async (text) => {
+  this.setState({loading: true})
+  console.log(text)
+  const res = await axios.get('https://api.github.com/search/users?q=${text}');
+    this.setState({users: res.data.items, loading: false})
+}
+
+
   render(){
   return (
 //Components, Props & PropTypes -  2:52 we also want to add a couple of class names to navbar and "bg-primary". This is working because of the custom CSS file we brought in, we could use Bootstrap or whatever we wanted to.(3:29 go to Navbar.js)
@@ -51,7 +61,9 @@ state = {
 {/*Lists & Passing State With Props - 7:42 Simply put a container right here and move the move users up into that container. (END OF VIDEO) */}
 
 {/*Events & Search Component - 1:49 here we will bring in Search, right above users and if we look at the site, it's there. 1:59 It doesn't do anything at all because we have no event or anything like that. Now, when we have a form in react, usually we're going to want to attach state to the input. (2:06 go to Search.js)   */}
-    <Search />
+    <Search searchUsers = {this.searchUsers}/>
+{/*Passing Props Up & Search - 2:10 we are going to be passing the prop searchUsers, like we named it's going to point to a method in this file, so go above the method and create that method.*/}
+
 
 {/*HTTP Requests & Updating State - 6:46 So now that we have those users in state, what we want to do is pass those down into our users component through props. Pass in loading = {this.state.loading} and user = {this.state.user}, 7:25 NOTE: if you are not getting data back from the api, you may have exhuasted your requests, which you get like 50, unless you get an API key. (8:03 go to Users.js) */}
       <Users loading = {this.state.loading} users = {this.state.users}/>
