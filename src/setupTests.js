@@ -24,3 +24,5 @@ import '@testing-library/jest-dom';
 
 // HTTP Requests & Updating State - 00:00 So right now we have just some hardcoded users inside of our state and our users component, which isn't really ideal. For one thing, we need to fetch the real users from the GitHub API. For another, we want to store any app level state such as our users in our App.js, since we're not using Context api or Redux or anything like that, we don't have a centralized store or anything like that. The next best thing is to have it in your App.js, that way you can easily send state down to components through props. Much like we did with sending the users down into the UserItem as a prop. (00:42 go to App.js)
 
+// Spinner Component & Refactoring - 00:00 Download the spinner gif from the resources from this lesson. So, inside of src/components/layout, paste in the gif. Create a new component/file called "Spinner.js" (00:42 go to Spinner.js)
+
