@@ -26,3 +26,10 @@ import '@testing-library/jest-dom';
 
 // Spinner Component & Refactoring - 00:00 Download the spinner gif from the resources from this lesson. So, inside of src/components/layout, paste in the gif. Create a new component/file called "Spinner.js" (00:42 go to Spinner.js)
 
+// Environment Variables - 00:00 we're going to get our API client I.D. in secret for GitHub so that we don't run out of requests and I'm also going to show you how to create environment variables, because that's where we want to store something like that. Now, to register your GitHub app, you just search for GitHub register app and it's the "Oauth" one, "https://github.com/settings/applications/new", just fill out the name you can use, localhost 3000 for your home page and callback and then register. Once you do that, you'll get a client ID and a client secret. (00:50 create a file in your root folder called ".env.local" ),  when you deploy, you want these very you want to add these as environment variables on your server. This this ".env.local", you don't want to put in like a public repository. It's in the gitignore created by npm (1:38 go to .env.local and type in  "REACT_APP_GITHUB_CLIENT_ID='' " and "REACT_APP_GITHUB_CLIENT_SECRET=''") for it to take effect, we need to restart server. (2:48 go to App.js)
+// NOTE: GitHub Discontinuing Auth Using Query Params Starting Nov. 2020 https://www.udemy.com/course/modern-react-front-to-back/learn/lecture/14969814#questions/10199398
+// Either way, if you ever need to store global variables, you can use .env.local.
+
+// -------------------------------------------Section 4: Events, Passing Props, React Router & More -----------------------------------------------------
+
+// Events & Search Component - 00:00 Now we work on the search form component. (00:22 create Search.js, go to it.)

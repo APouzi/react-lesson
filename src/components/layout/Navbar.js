@@ -1,5 +1,5 @@
 //Stateless Functional Components - 3:47 lastly, we want to get rid of the component on top of here since we don't use these. (3:52 go to UserItem.js)
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 //Stateless Functional Components - 2:24 there's some additional things we're going to have to do here because we are using default props and prop types, which right now are inside the class.  We're going to first change this to a function so we no longer need extends component. First we comment out the class based version and put in functional version, with passing in props
 // class Navbar extends Component {

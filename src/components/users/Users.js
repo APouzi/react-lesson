@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import UserItem from "./UserItem";
 // Spinner Component & Refactoring - 4:28 now we need to bring in the spinner
 import Spinner from "../layout/Spinner";

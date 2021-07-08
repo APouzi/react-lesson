@@ -6,6 +6,8 @@ import Navbar from './components/layout/Navbar';
 
 //Lists & Passing State With Props - 2:20  We no longer need to have this UserItem, above us, so we comment that out and put in our plural version
 import Users from './components/users/Users';
+//Events & Search Component -1:36 import search and scroll to bottom
+import Search from './components/users/Search';
 import axios from 'axios';
 import './App.css';
 
@@ -27,6 +29,7 @@ state = {
  async componentDidMount(){
 //HTTP Requests & Updating State - 4:35 We are going to change "loading to true". Now, when you're changing state, you can't directly change it. Like, I can't say "this.state.loading = true", that's not the way we do it with react. We have to, at least with class based components, use "this.setState();"  and then in the parameters, we can pass in an object with the part of the state we want to change, which is loading and we want to change it to True. 5:12 after we get the response "res", we want to reset the state. If we get the response, from the await, we then set our users to "res.data" that we got from res, after which, we want to set loading, back to false. 5:45 Brad shows the react dev tools. 
     this.setState({loading: true});
+//Events & Search Component - 2:57 Now for us to use our key and secret key in our environment, at the end of the link we input "?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&{process.env.REACT_APP_GITHUB_CLIENT_SECRET}" and inside the variable it's "process.env"
     const res = await axios.get('https://api.github.com/users');
     // console.log(res.data);
     this.setState({users: res.data, loading: false})
@@ -46,6 +49,9 @@ state = {
       {/* <UserItem /> */}
     <div className="container">
 {/*Lists & Passing State With Props - 7:42 Simply put a container right here and move the move users up into that container. (END OF VIDEO) */}
+
+{/*Events & Search Component - 1:49 here we will bring in Search, right above users and if we look at the site, it's there. 1:59 It doesn't do anything at all because we have no event or anything like that. Now, when we have a form in react, usually we're going to want to attach state to the input. (2:06 go to Search.js)   */}
+    <Search />
 
 {/*HTTP Requests & Updating State - 6:46 So now that we have those users in state, what we want to do is pass those down into our users component through props. Pass in loading = {this.state.loading} and user = {this.state.user}, 7:25 NOTE: if you are not getting data back from the api, you may have exhuasted your requests, which you get like 50, unless you get an API key. (8:03 go to Users.js) */}
       <Users loading = {this.state.loading} users = {this.state.users}/>
