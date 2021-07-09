@@ -16,8 +16,10 @@ class App extends Component {
   state = {
     users: [],
     user: {},
+    repos: [],
     loading: false,
     alert: null,
+    
   };
 
   async componentDidMount() {
@@ -51,6 +53,19 @@ class App extends Component {
     this.setState({ user: res.data, loading: false });
   };
 
+  //Repos & RepoItem Component & Data - 00:37 Here we will have the getUserRepos method, copy and paste "getUser", after "${username}" we input "/repos?" and then we want only 5 per_page and sorted by created, in ascending order. That's what the html means
+  getUserRepos = async (username) => {
+    this.setState({ loading: true });
+    const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`, {
+    headers: {
+      Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
+    },
+    }
+    );
+  //Repos & RepoItem Component & Data - 1:40 Here we change it from "user" to "repos", 1:59 make sure to add "repos: []" with an empty array, as the state and for some reason, brad moves it up the list. 2:15 scroll down so we can call this within our user component.
+    this.setState({ repos: res.data, loading: false });
+  };
+
   clearUsers = async () => {
     this.setState({ users: [], loading: false });
   };
@@ -61,7 +76,7 @@ class App extends Component {
   };
 
   render() {
-    const { users, user, loading } = this.state;
+    const { users, user, repos, loading } = this.state;
 
     return (
 //React Router Setup - 1:32 Here we will place the "Router", 1:47 What we have now, on the page, we are going to make that the "home route" aka "/", the "problem" is that we have a couple of components in the router like Search, Alert, Users. We could create another page "home" and just embed these, but just to show how, we can have multiple components in a single route, using Switches.
@@ -96,10 +111,13 @@ class App extends Component {
                 exact path='/user/:login'
                 render={(props) => (
 //Single User Component & Data - 5:16 Now we need to pass stuff into the user component, which is whatever props we want. So to do that, we need to use the "spread operator", which is {...props} and then we want the "getUser={this.getUser}", in addition to that we want to send in the user state, 5:40 which btw we need to add the to the destructure we have on top, so that way we can get the user state with "user = {user}", otherwise it would be "this.state.user", we also need to pass in loading. (6:37 go to UserItem.js)
+//Repos & RepoItem Component & Data - 2:24 Here we embed our repos, within the user component  and on top of that, we want to pass in the repos state, and we want to make sure repos is destructured. (3:00 go to User.js)
                   <User
                     {...props}
                     getUser={this.getUser}
+                    getUserRepos={this.getUserRepos}
                     user={user}
+                    repos = {repos}
                     loading={loading}
                   />
                 )}
