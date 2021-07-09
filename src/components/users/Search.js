@@ -16,6 +16,7 @@ static propTypes = {
   searchUsers: PropTypes.func.isRequired,
   clearUsers: PropTypes.func.isRequired,
   showClear: PropTypes.bool.isRequired,
+  setAlert: PropTypes.func.isRequired,
 }
 
 
@@ -23,9 +24,18 @@ static propTypes = {
 onSubmit = (e) => {
     e.preventDefault();
 //Passing Props Up & Search - 00:39 We have to pass this up to the main App components through props. So the way that we can do that is by creating a method called searchUsers and passing in "this.state.text", then we want to clear the form after, with a searchUsers() method we will create. 1:22 searchUsers doesn't actually exist right now, so we have to pass that into <Search /> as a prop, since we are calling "this.props.searchUsers", we want to pass in "his.state.text". 1:37 so instead of sending a prop down, we're actually sending a prop up and this is the problem with not using something like context or redux is you can start to get, you know, three or four levels deep and you're just it's called prop drilling. You're sending things up and down through props and it gets kind of messy and you're going to see that but then later on, I'm going to show you how we can fix it. (1:57 go to App.js)
-    console.log(this.state.text)
-    this.props.searchUsers(this.state.text); 
-    this.setState({text: ''})
+console.log(this.state.text)
+
+
+//Alert State & Component - 00:20 underneath preventDefualt, we need to input logic for the alert. We will be asking about in if statement, if the state of the text is empty on submit, if so, then we want to set an alert. so we input "this.props.setAlert()" in which we will create that method and it's going to take in two parameters, the text and it's going to take a type, which is going to be "light" or light gray. For the "else" we want the other stuff we had, which was going to do the search. 1:13 Just like the rest of the proptypes, we need to set the proptypes, which is function required. (1:29 go to App.js)
+    if(this.state.text === ''){
+        this.props.setAlert('Please enter something', 'light')
+    }else{
+      this.props.searchUsers(this.state.text); 
+      this.setState({text: ''})
+    }
+    
+    
 }
 
 
