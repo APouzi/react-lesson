@@ -30,6 +30,7 @@ import '@testing-library/jest-dom';
 // NOTE: GitHub Discontinuing Auth Using Query Params Starting Nov. 2020 https://www.udemy.com/course/modern-react-front-to-back/learn/lecture/14969814#questions/10199398
 // Either way, if you ever need to store global variables, you can use .env.local.
 
+
 // -------------------------------------------Section 4: Events, Passing Props, React Router & More -----------------------------------------------------
 
 // Events & Search Component - 00:00 Now we work on the search form component. (00:22 create Search.js, go to it.)
@@ -43,3 +44,10 @@ import '@testing-library/jest-dom';
 //React Router Setup - 00:00 So in this video, I want to set up our react router so that we can have different routes, because right now we just have our components embedded right into our main app component and in the terminal, 00:20 we want to input "npm i react-router-dom" and this will install the latest version of React (00:43 go to App.js)
 
 // Single User Component & Data - 00:00 Now we want to have the User layout. So when we hit "more", we don't want the page to go to an external site, we want to get the api data and build our own page. We are going to do this with the Github API. First, lets create the function to make the request for the github, and then make the user component. (1:02 go to App.js)
+
+// User Component UI & Layout - 00:00 We got all the data we need to build the user UI,  (00:33 go to User.js) 
+
+//Repos & RepoItem Component & Data - 00:00  so now we want to display the users repositories, I want to display it down here and we're going to have separate components for that, well have a repos component, and then we'll have a repo item for each one. The endpoint is going to be slightly different, in that it's going to end with a "/repos" at the end of the user. Let's create the function first (00:33 go to App.js)
+
+
+// -------------------------------------------Section 4: Events, Passing Props, React Router & More -----------------------------------------------------
