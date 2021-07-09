@@ -40,4 +40,6 @@ import '@testing-library/jest-dom';
 
 //Alert State & Component - 00:00 We will set up an alert system. if we search here with without entering anything, I want to show an alert. (00:12 go to Search.js)
 
-//React Router Setup - 00:00 so in this video, I want to set up our react router so that we can have different routes, because right now we just have our components embedded right into our main app component and in the terminal, 00:20 we want to input "npm i react-router-dom" and this will install the latest version of React (00:43 go to App.js)
+//React Router Setup - 00:00 So in this video, I want to set up our react router so that we can have different routes, because right now we just have our components embedded right into our main app component and in the terminal, 00:20 we want to input "npm i react-router-dom" and this will install the latest version of React (00:43 go to App.js)
+
+// Single User Component & Data - 00:00 Now we want to have the User layout. So when we hit "more", we don't want the page to go to an external site, we want to get the api data and build our own page. We are going to do this with the Github API. First, lets create the function to make the request for the github, and then make the user component. (1:02 go to App.js)
