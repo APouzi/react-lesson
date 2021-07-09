@@ -39,3 +39,5 @@ import '@testing-library/jest-dom';
 //Clear Users From State - 00:00  What I like to do is have a clear button here so that we can just kind of set the state back to its default, its default state of just an empty array and they only want the clear button to show if there's users in the state. when we first come to the page, it should not be a clear button, So we need to add that functionality as well. (00:33 go to Search.js)
 
 //Alert State & Component - 00:00 We will set up an alert system. if we search here with without entering anything, I want to show an alert. (00:12 go to Search.js)
+
+//React Router Setup - 00:00 so in this video, I want to set up our react router so that we can have different routes, because right now we just have our components embedded right into our main app component and in the terminal, 00:20 we want to input "npm i react-router-dom" and this will install the latest version of React (00:43 go to App.js)
