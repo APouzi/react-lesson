@@ -1,68 +1,52 @@
-//Events & Search Component - 00:22 type in "rce" and write up the html. 1:28 save that and bring that to App.js (1:32 go to App.js)
-import React, { Component } from "react";
-//Passing Props Up & Search - 7:40 now we need to add searchUsers as a proptype.  So we need to import proptypes here
+//3:24 now we need to bring in "useState" hook since we cant use the "state = {}" ordeal. to do that we need "{useState}", remember not default.
+import React, { useState } from "react";
 import PropTypes from 'prop-types'
 
 
-export class Search extends Component {
-//Events & Search Component - 2:17 So we are going to create state object, have a field for text and it's going to be empty by default. 2:25 then we go to the input and put a "value = {this.state}"
-  state = {
-    text: "",
-  };
+// 00:22 we have a class based component with one piece of state, which I think is a good is a good way to introduce the useState hook. 1:02 First thing we do is change this to a functional based component. We could do "function" but we use arrows here for now. 1:22 We also don't need state anymore either. 
 
-//Passing Props Up & Search - 7:47 input the proptypes here, and have it so that searchUsers is a function required only. 
-//Clear Users From State - 3:55  add the showClear proptype which is a bool required, scroll down to button tag
-static propTypes = {
-  searchUsers: PropTypes.func.isRequired,
-  clearUsers: PropTypes.func.isRequired,
-  showClear: PropTypes.bool.isRequired,
-  setAlert: PropTypes.func.isRequired,
-}
+//2:27 since props are coming in through the parameter of the Search, we don't have to do any of the "this.props...." since we can just pass it into Search parameters. While we are passing it through there, we can actually destrustructer the props. "searchUsers, showClear, clearUsers" which are all being passed in as "props". Time to start removing what we don't need because of this change
+const Search = ({searchUsers, showClear, clearUsers, setAlert}) => {
+// 3:36 we will define our state here and we only have one, which is text. so that way it works, is we destructure it. So how we do that is simply by inputting what state we want, "text", and then the next parameter is the method we create to change the state, usually "setText", since text is what we are changing. After all that, we set all that to "useState()" and inside that, whatever the default state value is going to be. 
+  const [text, setText] = useState('');
 
+//2:07 We are still going to have an "onSubmit" here and an "onChange" here, but in order for us to have a function within a function, we need to put const in front. 
 
-//Events & Search Component - 5:50 If we don't want to use Arrow functions, watch this video on what you would have to do. in short use them arrow functions.
-onSubmit = (e) => {
+// 5:46 Here we can make "this.state.text" to "text". Since setAlert is another property that is being passed in, we can put that into our destructure, that is in the parameter of Search() component. We can also remove all the "this.props" from seAlert and searchUsers. Then to set text to "nothing" at the last line of onSubmit() we do a "setText({text: ''})".
+const onSubmit = (e) => {
     e.preventDefault();
-//Passing Props Up & Search - 00:39 We have to pass this up to the main App components through props. So the way that we can do that is by creating a method called searchUsers and passing in "this.state.text", then we want to clear the form after, with a searchUsers() method we will create. 1:22 searchUsers doesn't actually exist right now, so we have to pass that into <Search /> as a prop, since we are calling "this.props.searchUsers", we want to pass in "his.state.text". 1:37 so instead of sending a prop down, we're actually sending a prop up and this is the problem with not using something like context or redux is you can start to get, you know, three or four levels deep and you're just it's called prop drilling. You're sending things up and down through props and it gets kind of messy and you're going to see that but then later on, I'm going to show you how we can fix it. (1:57 go to App.js)
-console.log(this.state.text)
+console.log(text)
 
-
-//Alert State & Component - 00:20 underneath preventDefualt, we need to input logic for the alert. We will be asking about in if statement, if the state of the text is empty on submit, if so, then we want to set an alert. so we input "this.props.setAlert()" in which we will create that method and it's going to take in two parameters, the text and it's going to take a type, which is going to be "light" or light gray. For the "else" we want the other stuff we had, which was going to do the search. 1:13 Just like the rest of the proptypes, we need to set the proptypes, which is function required. (1:29 go to App.js)
-    if(this.state.text === ''){
-        this.props.setAlert('Please enter something', 'light')
+    if(text === ''){
+        setAlert('Please enter something', 'light')
     }else{
-      this.props.searchUsers(this.state.text); 
-      this.setState({text: ''})
+      searchUsers(text); 
+      setText('');
     }
     
     
 }
 
 
-
-//Events & Search Component - 3:06 now we need to create the method up here called "onChange", which takes in an "event" parameter that we call "e". Then inside we want this.setState and inside the parameter, we want "text" to be set to whatever we type in, we can access that with the event " e.target.value". 3:51 if we go to react dev tool, we can see that the state is now whatever we type. 4:04 so this is not a piece of state that we want to be app level. It's it's just relative to the component itself. So even when we implement context or if we were to use redux, when you have forms, your form inputs are going to be component level state. 4:21  there's a little trick here. I mean, we could leave it like this just because we only have one input field or one text field, but let's say we had like "name, email address, phone number". If we had a bunch of different fields, we don't want to have a separate onChange() for each one. So instead, what we could use is "this.setState({[e.target.name]: e.target.value});" from "text: e.target.value". 5:15 because we don't have other JS we can remove the curly braces from the onChange
-onChange =(e) => {
-    this.setState({[e.target.name]: e.target.value});
-}
+// 4:16 onChange, we no longer do "this.setState" when we want to change the state, instead we call the method we had set for the state, which was "setText". 4:29 we no longer have to do "{[e.target.name]: e.target.value}", which is passing in an object. We just pass in what we want to set the text to, which is going to be the event target of the value in the search.
+const onChange =(e) => setText(e.target.value);
 
 
-  render() {
-//Clear Users From State - 5:20  Here we will destructure our stuff. Now we can turn "this.props.clearUsers" to "clearUsers" and "this.props.showClear" to "showClear". (6:35 go to App.js to destructure there.)
-const {showClear, clearUsers} = this.props;
+// 2:12 There is no more render, since it's not a class anymore and instead we just need a return. Props also are not going to come from "this.props" remember with functions, props come in through the parameter of the function. Instead of using props.
+  
+//3:00 we can delete "const {showClear, clearUsers} = this.props;" because of the change. we also want to get rid of "render()" since this isn't a class based component and we can just have the return.
 
 
+//4:47 we no longer use "this.state.text", we can simply use "text". we can also remove "this." from onChange, since it's no longer a class, this also applies to "onSubmit".
     return (
       <div>
-{/*Events & Search Component - 5:26  we're going to want in onSubmit, because right now we can just enter text into the into the field. so have that in the form field and have that equal to the "this.onSubmit" */}
-        <form action="form" onSubmit = {this.onSubmit}>
-{/*Events & Search Component - 2:15 So, for instance, we have an input here for the search text. */}
+        <form action="form" onSubmit = {onSubmit}>
           <input
             type="text"
             name="text"
             placeholder="Search Users..."
-            value={this.state.text}
-//Events & Search Component - 2:32 Now, if I save this and I go back, I actually can't type in here, OK? And the reason for that is because it's a controlled component. Basically, we have to have an onChange event for when we for when we type something in here. It needs to fire off and it needs to update the state because remember, this input is now attached to this state. So what we need to do is, add in onChange, and I'm going to set that to fire off a method called "this.onChange".
-            onChange = {this.onChange}
+            value={text}
+            onChange = {onChange}
           />
           <input
             type="submit"
@@ -71,14 +55,18 @@ const {showClear, clearUsers} = this.props;
           />
         </form>
 
-{/*Clear Users From State - 4:19 We are going to wrap the button in logic to make sure it's showing or not. So if showClear is true and put the "&&" in with the button, this is how we do if statements with these. Comment out the earlier code below. 5:20 lets pull out showClear and other methods from the props, scroll up */}
 {showClear && (<button className="btn btn-light btn-block" onClick = {clearUsers} >Clear</button>)}
-
-{/*Clear Users From State - 00:35 put in a button with a class of "btn btn-light btn-block", insde this tag we will have a Clear and then a "onClick = " method call, that will call a method that we will create later. Now all I want this to do is call a prop method, a function that's attached to prop "this.props.clearUsers". 1:11 Since this is a prop, we add this to our proptypes. 1:20 Now, remember, when we're calling this props, clear users, we're sending this up, right? So we have to catch it in our App.js (1:27 go to App.js)
-<button className="btn btn-light btn-block" onClick = {this.props.clearUsers} >Clear</button> */}
       </div>
     );
-  }
+    }
+
+//1:35 get rid of the static propTypes from the top and paste them here and then, instead of "static propTypes", it's now going to be "Search.propTypes"
+Search.propTypes = {
+  searchUsers: PropTypes.func.isRequired,
+  clearUsers: PropTypes.func.isRequired,
+  showClear: PropTypes.bool.isRequired,
+  setAlert: PropTypes.func.isRequired,
 }
+
 
 export default Search;
