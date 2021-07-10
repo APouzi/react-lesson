@@ -58,3 +58,5 @@ import '@testing-library/jest-dom';
 // Search Class to Function With useState Hook - 00:00 (00:20 go to Search.js)
 
 // User Class to Function With useEffect Hook - 00:00 Now we work on the User.js and turning that into a functional based component. the reason why we made User.js in a class based component was because we wanted to use "componentDidMount()", which fires off when the components mount and so does all the code inside the method. (00:33 go to User.js)
+
+// App Class to Function Component - 00:00 (00:11 go to app.js) 
