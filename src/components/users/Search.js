@@ -1,12 +1,15 @@
 //Search Class to Function With useState Hook - 3:24 now we need to bring in "useState" hook since we cant use the "state = {}" ordeal. to do that we need "{useState}", remember not default.
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from 'prop-types'
-
+import GithubContext from "../../context/github/githubContext";
 
 //Search Class to Function With useState Hook -  00:22 we have a class based component with one piece of state, which I think is a good is a good way to introduce the useState hook. 1:02 First thing we do is change this to a functional based component. We could do "function" but we use arrows here for now. 1:22 We also don't need state anymore either. 
 
 //Search Class to Function With useState Hook - 2:27 since props are coming in through the parameter of the Search, we don't have to do any of the "this.props...." since we can just pass it into Search parameters. While we are passing it through there, we can actually destrustructer the props. "searchUsers, showClear, clearUsers" which are all being passed in as "props". Time to start removing what we don't need because of this change
-const Search = ({searchUsers, showClear, clearUsers, setAlert}) => {
+const Search = ({ showClear, clearUsers, setAlert}) => {
+//Create Reducer & Actions - 8:58 this is where we are going to define the githubContext and set that to "useContext", and pass in the context we want to use, which is "GithubContext". Import in useContext with react.
+   const githubContext = useContext(GithubContext)
+
 //Search Class to Function With useState Hook -  3:36 we will define our state here and we only have one, which is text. so that way it works, is we destructure it. So how we do that is simply by inputting what state we want, "text", and then the next parameter is the method we create to change the state, usually "setText", since text is what we are changing. After all that, we set all that to "useState()" and inside that, whatever the default state value is going to be. 
   const [text, setText] = useState('');
 
@@ -20,7 +23,8 @@ console.log(text)
     if(text === ''){
         setAlert('Please enter something', 'light')
     }else{
-      searchUsers(text); 
+//Create Reducer & Actions - 9:35 if we go down to where we call searchUsers, it's part of the "githubContext" variable we called. (9:50 go to GithubState.js)
+      githubContext.searchUsers(text); 
       setText('');
     }
     
@@ -61,12 +65,12 @@ const onChange =(e) => setText(e.target.value);
     }
 
 //Search Class to Function With useState Hook - 1:35 get rid of the static propTypes from the top and paste them here and then, instead of "static propTypes", it's now going to be "Search.propTypes"
+
 Search.propTypes = {
-  searchUsers: PropTypes.func.isRequired,
   clearUsers: PropTypes.func.isRequired,
   showClear: PropTypes.bool.isRequired,
   setAlert: PropTypes.func.isRequired,
 }
-
+//Create Reducer & Actions - 8:28 We no longer have searchUsers as a prop. So the way that we do this is with the use context hook. 8:29 So I'm actually going to get rid of search users from the props (get rid of SearchUsers from {searchUsers, showClear, clearUsers, setAlert} up at the top, on line 9). We can also get rid of it from the propTypes. 8:39 what we want to do now is import in our Context (import GithubContext from "../../context/github/githubContext";). 
 
 export default Search;

@@ -37,20 +37,22 @@ const [alert, setAlert] = useState(null);
   //   this.setState({ users: res.data, loading: false });
   // }
 
-//App Class to Function Component - 2:06 For search users, instead of "this.setState({ loading: true });" we now use the useState hook we created, setLoading.
-  const  searchUsers = async (text) => {
-    setLoading(true);
-    console.log(text);
-    const res = await axios.get(`https://api.github.com/search/users?q=${text}`, {
-      headers: {
-          Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
-        },
-      }
-    );
-//App Class to Function Component - 2:29 instead of "this.setState({ users: res.data.items, loading: false });", we now do "setUsers(res.data.items);"
-    setUsers(res.data.items);
-    setLoading(false);
-  };
+
+//Create Reducer & Actions - 1:40 Grab search users and move it to GithubState.js
+// //App Class to Function Component - 2:06 For search users, instead of "this.setState({ loading: true });" we now use the useState hook we created, setLoading.
+//   const  searchUsers = async (text) => {
+//     setLoading(true);
+//     console.log(text);
+//     const res = await axios.get(`https://api.github.com/search/users?q=${text}`, {
+//       headers: {
+//           Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
+//         },
+//       }
+//     );
+// //App Class to Function Component - 2:29 instead of "this.setState({ users: res.data.items, loading: false });", we now do "setUsers(res.data.items);"
+//     setUsers(res.data.items);
+//     setLoading(false);
+//   };
 
 //App Class to Function Component - 3:05 Here we are going to be doing a "setLoading(true)".  After that, we do a "this.setState({ user: res.data, loading: false });" to "setUser(res.data);" and "setLoading(false);".
   const getUser = async (username) => {
@@ -110,9 +112,9 @@ const showAlert = (msg, type) => {
                 exact
                 path="/"
                 render={(props) => (
+//Create Reducer & Actions - 7:57 down here, where we have our search component, we were passing in "searchUsers={searchUsers}", we no longer have to do that. Since we can access it through context. (8:12 go to Search.js in componets/users)
                   <Fragment>
                     <Search
-                      searchUsers={searchUsers}
                       clearUsers={clearUsers}
                       showClear={users.length > 0 ? true : false}
                       setAlert={showAlert}
