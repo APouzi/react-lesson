@@ -8,6 +8,9 @@ import Search from "./components/users/Search";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
 import axios from "axios";
+//Implementing Context - 10:59 Here we are going to be bring in our "GithubState"
+import GithubState from "./context/github/GithubState";
+
 import "./App.css";
 
 const App = () => {
@@ -83,15 +86,20 @@ const clearUsers = async () => {
   };
 
 //App Class to Function Component - 4:21 instead of "this.setState({ alert: { msg, type } });" we just do a setAlert({ msg, type }). 
-//App Class to Function Component - 6:45 change name from setAlert to showAlert and change the method from "setAlert={setAlert}" to "setAlert={showAlert}" (END OF VIDEO)
+//App Class to Function Component - 6:45 change name from setAlert to showAlert and change the method from "setAlert={setAlert}" to "setAlert={showAlert}". Next we will be implementing Context (END OF VIDEO)
 const showAlert = (msg, type) => {
     setAlert({ msg, type });
     //For the alert, just replace  "this.setState({ alert: null })" with a "setAlert(null)"
     setTimeout(() => setAlert(null), 5000);
   };
 
+
+
+
 //App Class to Function Component - 5:00 get rid of the render, and the destructuring used in the render.Remove all the "this.". 5:53 Make sure you declare const in all the methods. 
     return (
+//Implementing Context - 11:25 The methods above are going to go into the GithubState, but we are going to do the GithubState wrap here. Now the GithubState file is implemented. 12:05 So throughout the next few videos, what we want to do is move everything, all this stuff, including the state here we want to move to our app level state, which is this file here, and then any changes that are made to the state are going to go through the reducer, which we haven't added anything to yet. (END OF VIDEO)
+<GithubState>
       <Router>
         <div className="App">
           <Navbar />
@@ -133,6 +141,7 @@ const showAlert = (msg, type) => {
           </div>
         </div>
       </Router>
+      </GithubState>
     );
 }
 
