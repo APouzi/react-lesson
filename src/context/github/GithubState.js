@@ -50,7 +50,15 @@ const GithubState = (props) => {
 
   // Get User
   // Get Repos
-  // Clear Users
+
+  // 4:47 Here we paste the "clear users" function. Now we want to do something a little different here. With all our actions, we want to dispatch to our producer. So we have a type called "CLEAR_USERS". So I just want to dispatch() and dispatch an object with the type of CLEAR_USERS. (5:19 go to the githubReducer)
+  const clearUsers = () => dispatch({type: CLEAR_USERS});
+  // // Clear Users
+  // const clearUsers = async () => {
+  //   setUsers([]);
+  //   setLoading(false);
+  // };
+
 
   // Set Loading
 //Create Reducer & Actions - 2:10 The first thing we want to do is set our lading to true, but we don't have that function yet. Lets make it. Now, all we want this to do, this set loading is dispatch to our reducer. So we do that with the dispatch that was pulled from the useReducer hook and what we dispatch is an object{}, that has a "type". it has to have a type. You can send a payload with data if needed, but for for this, we don't actually need a payload. We just need the type which is going to be SET_LOADING, from types. the reducer is going to catch that, We need to basically handle that within the reducer.
@@ -59,6 +67,8 @@ const GithubState = (props) => {
 //Implementing Context - 9:10 After we write the comments of the functions above we continue. What we want to "return" here is the "provider" or <GithubContext.Provider> because we basically have to wrap our entire application with the provider. Now, this provider is going to say, let's just do that. This provider is going to take in a bunch of props, which is going to be in one value. We want to pass in anything that we want available to the entire app, such as users and we can get that from "state.users". 10:16 Now, any methods or action methods we create here, like search users and so on, we're also going to want to pass those. I haven't created those yet, so I'm not going to pass them in just yet.
 
 //Create Reducer & Actions - 9:53 if we want to actually use "searchUsers()" action, what we have to do is go down to the Provider and pass it in as just "searchUsers", that way it's avaible in the value of the context. 10:20 if we want to use that method in any component, all we have to do is bring in the context, initialize it, and then call whatever piece of state or whatever action we want that's associated with that context.
+
+// 8:33 Add in clearUsers to the gitHub state, for the application to be able to access it. It's clearing it from the app level state, rather than the app state level component (8:30 go to App.js). 
   return (
     <GithubContext.Provider
       value={{
@@ -67,6 +77,7 @@ const GithubState = (props) => {
         repos: state.repos,
         loading: state.loading,
         searchUsers,
+        clearUsers
       }}
     >
       {props.children}

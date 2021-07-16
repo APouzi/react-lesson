@@ -14,6 +14,14 @@ export default (state, action) => {
                 loading: false
             }
 
+//5:21 Now we are going to create a case for CLEAR_USERS,return the spread operator of the state, and set the users to an empty array and then loading to false. In order to call clear users, we have to go into the component we're using it in (6:03 go to Search.js)
+        case CLEAR_USERS:
+            return {
+                ...state,
+                users: [],
+                loading: false
+            }
+
 //Create Reducer & Actions - 5:24 for any other cases, an example, we're going to say "case SET_LOADING:"  
         case SET_LOADING:
 //Create Reducer & Actions - 5:31 So for set loading, we want to return our state now. We want to return whatever is already in the state, state is immutable, meaning We can't just reassign it. We have to basically make a copy of it and then add any additions or changes to it. Now, the way we can copy it is with the spread operator(...). We can just say triple dot and then "state" and that's going to copy whatever is in the current state. Now what SET_LOADING does, is it just sets the loading value to true(loading: true).because it's initially false. 6:10 If we look in our GitHubState.js, loading is false. But when we make a request such as searchUsers, we want to set it to true, and that's what this is going to do. (setLoading() in searchUsers calls setLoading the method, which dispatches the SET_LOADING to the Reducer(here) and it sets loading to true. 

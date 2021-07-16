@@ -12,10 +12,12 @@ import axios from "axios";
 import GithubState from "./context/github/GithubState";
 
 import "./App.css";
+import { GET_USER } from "./context/types";
 
 const App = () => {
 //App Class to Function Component - 00:35 lets do a "useState" to replace the multiple states that are found here in the "state = {}" object. The state object will be commented out for comparison.
-const [users, setUsers] = useState([]);
+//8:44 Since we are no longer calling setUsers, we can remove it from here.
+// const [users, setUsers] = useState([]);
 const [user, setUser] = useState({});
 const [repos, setRepos] = useState([]);
 const [loading, setLoading] = useState(false);
@@ -56,6 +58,7 @@ const [alert, setAlert] = useState(null);
 
 //App Class to Function Component - 3:05 Here we are going to be doing a "setLoading(true)".  After that, we do a "this.setState({ user: res.data, loading: false });" to "setUser(res.data);" and "setLoading(false);".
   const getUser = async (username) => {
+  //9:11 setLoading doesn't need a value, the dispatcher sets the value to true. Set loading doesn't need a value because this this just calls basically just dispatches to the reducer's setLoading, which sets the loading value to true.
     setLoading(true);
     const res = await axios.get(`https://api.github.com/users/${username}`, {
     headers: {
@@ -63,8 +66,13 @@ const [alert, setAlert] = useState(null);
     },
     }
     );
-    setUser(res.data);
-    setLoading(false);
+    // // 9:26 we want to dispatch here, so remove the setUser and setLoading. Which is the singular user, that comes from the endpoint above. (9:49 go the reducer)
+    // setUser(res.data);
+    // setLoading(false);
+    dispatch({
+      type: GET_USER,
+      payload: res.data
+    })
   };
 
   //App Class to Function Component - 3:22 same thing with repos, we use setLoading and setRepos useState hooks.
@@ -80,12 +88,12 @@ const [alert, setAlert] = useState(null);
     setLoading(false);
   };
 
-
-//App Class to Function Component - 3:55 for clearUsers we do the same thing but except it's "setUsers".
-const clearUsers = async () => {
-    setUsers([]);
-    setLoading(false);
-  };
+//4:31 We want to clearUsers and copy and paste that into GithubState. (4:47 go to GithubState.js) 
+// //App Class to Function Component - 3:55 for clearUsers we do the same thing but except it's "setUsers".
+// const clearUsers = async () => {
+//     setUsers([]);
+//     setLoading(false);
+//   };
 
 //App Class to Function Component - 4:21 instead of "this.setState({ alert: { msg, type } });" we just do a setAlert({ msg, type }). 
 //App Class to Function Component - 6:45 change name from setAlert to showAlert and change the method from "setAlert={setAlert}" to "setAlert={showAlert}". Next we will be implementing Context (END OF VIDEO)
@@ -114,11 +122,13 @@ const showAlert = (msg, type) => {
                 render={(props) => (
 //Create Reducer & Actions - 7:57 down here, where we have our search component, we were passing in "searchUsers={searchUsers}", we no longer have to do that. Since we can access it through context. (8:12 go to Search.js in componets/users)
                   <Fragment>
+{/*Moving User State To Context - 00:00   */}
                     <Search
                       clearUsers={clearUsers}
                       showClear={users.length > 0 ? true : false}
                       setAlert={showAlert}
                     />
+{/*00:44 we want to get rid of both of these users and loading because now these are part of the "app level state" part of context. So we can just reach in to the context and grab that stuff rather than having to pass it in. 00:58 let's go to Users.js*/}
                     <Users loading={loading} users={users} />
                   </Fragment>
                 )}
