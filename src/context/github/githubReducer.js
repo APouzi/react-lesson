@@ -14,7 +14,15 @@ export default (state, action) => {
                 loading: false
             }
 
-//5:21 Now we are going to create a case for CLEAR_USERS,return the spread operator of the state, and set the users to an empty array and then loading to false. In order to call clear users, we have to go into the component we're using it in (6:03 go to Search.js)
+//Moving User State To Context - 9:55 Here we are going to be putting in our reducer action(GET_USER), that will be dispatched to the githubReducer.js, Do a spread operator and then go and return the user: action.payload, after that set the loading to false. (10:21 go to App.js)
+        case GET_USER:
+            return{
+                ...state,
+                user: action.payload,
+                loading: false
+            }
+
+//Moving User State To Context - 5:21 Now we are going to create a case for CLEAR_USERS,return the spread operator of the state, and set the users to an empty array and then loading to false. In order to call clear users, we have to go into the component we're using it in (6:03 go to Search.js)
         case CLEAR_USERS:
             return {
                 ...state,

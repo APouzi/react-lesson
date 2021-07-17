@@ -10,10 +10,10 @@ import GithubContext from "../../context/github/githubContext";
 const Users = () => {
 // Spinner Component & Refactoring - 4:48 what we will do is an if statement that asks if loading is true, if so, then return Spinner component. in the else, we are going to copy and paste the other return we had before.
 
-// 1:22 First, we want to import the GithubContext and then we want to define it in the function for us to use this "useContext". Now we have access to everything in Github Context (users, user, repos, loading, searchUsers). All because we imported that and 
+//Moving User State To Context - 1:22 First, we want to import the GithubContext and then we want to define it in the function for us to use this "useContext". Now we have access to everything in Github Context (users, user, repos, loading, searchUsers). All because we imported that and 
 const githubContext = useContext(GithubContext);
 
-//2:38 We want to destructure "loading and users" and make it equal to the defined githubContext. Then delete the "{ users, loading }" from the parameters being passed in since our props are being handled by the contextAPI. Since this stuff is no longer coming from "app.js". ( 4:01 go to App.js and to clearUser() ) 
+//Moving User State To Context - 2:38 We want to destructure "loading and users" and make it equal to the defined githubContext. Then delete the "{ users, loading }" from the parameters being passed in since our props are being handled by the contextAPI. Since this stuff is no longer coming from "app.js". ( 4:01 go to App.js and to clearUser() ) 
 const {loading, users} = githubContext
   if (loading) {
     return <Spinner />;
@@ -35,7 +35,7 @@ const userStyle = {
 };
 
 
-//7:42 Remove propTypes entirely and it's imports. (8:04 go to githubState.js)
+//Moving User State To Context - 7:42 Remove propTypes entirely and it's imports. (8:04 go to githubState.js)
 // Spinner Component & Refactoring - 6:04 here we will bring in propTypes, camel case. Inside there, we have users with an array that is required or "ptar" shortcut and loading with the "ptbr" shortcut for bool required. (END OF VIDEO)
 // Users.propTypes = {
 //   users: PropTypes.array.isRequired,

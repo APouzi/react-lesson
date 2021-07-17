@@ -49,9 +49,27 @@ const GithubState = (props) => {
   };
 
   // Get User
+//Moving User State To Context - 9:06 Here we will be getting  
+  const getUser = async (username) => {
+//Moving User State To Context - 9:11 setLoading doesn't need a value, the dispatcher sets the value to true. This setLoading() in here basically just dispatches to the reducer's setLoading(), which sets the loading value to "true".
+      setLoading();
+      const res = await axios.get(`https://api.github.com/users/${username}`, {
+      headers: {
+        Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
+      },
+      }
+      );
+// //Moving User State To Context - 9:26 we want to dispatch here, since all these functions/actions will end with a dispatch. so remove the setUser and setLoading. Which is the singular user, that comes from the endpoint above. (9:49 go the reducer)
+      // setUser(res.data);
+      // setLoading(false);
+      dispatch({
+        type: GET_USER,
+        payload: res.data
+      })
+    };
   // Get Repos
 
-  // 4:47 Here we paste the "clear users" function. Now we want to do something a little different here. With all our actions, we want to dispatch to our producer. So we have a type called "CLEAR_USERS". So I just want to dispatch() and dispatch an object with the type of CLEAR_USERS. (5:19 go to the githubReducer)
+  //Moving User State To Context - 4:47 Here we paste the "clear users" function. Now we want to do something a little different here. With all our actions, we want to dispatch to our producer. So we have a type called "CLEAR_USERS". So I just want to dispatch() and dispatch an object with the type of CLEAR_USERS. (5:19 go to the githubReducer)
   const clearUsers = () => dispatch({type: CLEAR_USERS});
   // // Clear Users
   // const clearUsers = async () => {
@@ -68,7 +86,7 @@ const GithubState = (props) => {
 
 //Create Reducer & Actions - 9:53 if we want to actually use "searchUsers()" action, what we have to do is go down to the Provider and pass it in as just "searchUsers", that way it's avaible in the value of the context. 10:20 if we want to use that method in any component, all we have to do is bring in the context, initialize it, and then call whatever piece of state or whatever action we want that's associated with that context.
 
-// 8:33 Add in clearUsers to the gitHub state, for the application to be able to access it. It's clearing it from the app level state, rather than the app state level component (8:30 go to App.js). 
+//Moving User State To Context - 8:33 Add in clearUsers to the gitHub state, for the application to be able to access it. It's clearing it from the app level state, rather than the app state level component (Moving User State To Context - 8:30 go to App.js). 
   return (
     <GithubContext.Provider
       value={{
@@ -77,7 +95,8 @@ const GithubState = (props) => {
         repos: state.repos,
         loading: state.loading,
         searchUsers,
-        clearUsers
+        clearUsers,
+        getUser
       }}
     >
       {props.children}

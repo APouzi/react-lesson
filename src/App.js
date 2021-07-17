@@ -16,9 +16,9 @@ import { GET_USER } from "./context/types";
 
 const App = () => {
 //App Class to Function Component - 00:35 lets do a "useState" to replace the multiple states that are found here in the "state = {}" object. The state object will be commented out for comparison.
-//8:44 Since we are no longer calling setUsers, we can remove it from here.
+//Moving User State To Context - 8:44 Since we are no longer calling setUsers, we can remove it from here.
 // const [users, setUsers] = useState([]);
-const [user, setUser] = useState({});
+// const [user, setUser] = useState({});
 const [repos, setRepos] = useState([]);
 const [loading, setLoading] = useState(false);
 const [alert, setAlert] = useState(null);
@@ -57,23 +57,24 @@ const [alert, setAlert] = useState(null);
 //   };
 
 //App Class to Function Component - 3:05 Here we are going to be doing a "setLoading(true)".  After that, we do a "this.setState({ user: res.data, loading: false });" to "setUser(res.data);" and "setLoading(false);".
-  const getUser = async (username) => {
-  //9:11 setLoading doesn't need a value, the dispatcher sets the value to true. Set loading doesn't need a value because this this just calls basically just dispatches to the reducer's setLoading, which sets the loading value to true.
-    setLoading(true);
-    const res = await axios.get(`https://api.github.com/users/${username}`, {
-    headers: {
-      Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
-    },
-    }
-    );
-    // // 9:26 we want to dispatch here, so remove the setUser and setLoading. Which is the singular user, that comes from the endpoint above. (9:49 go the reducer)
-    // setUser(res.data);
-    // setLoading(false);
-    dispatch({
-      type: GET_USER,
-      payload: res.data
-    })
-  };
+
+//Moving User State To Context - 8:56 Now we need to move this "getUser" function from App.js to GithubState.js (9:03 copy getUser function, go to GithubState.js)
+  // const getUser = async (username) => {
+  //   setLoading(true);
+  //   const res = await axios.get(`https://api.github.com/users/${username}`, {
+  //   headers: {
+  //     Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
+  //   },
+  //   }
+  //   );
+  //   // // 9:26 we want to dispatch here, so remove the setUser and setLoading. Which is the singular user, that comes from the endpoint above. (9:49 go the reducer)
+  //   // setUser(res.data);
+  //   // setLoading(false);
+  //   dispatch({
+  //     type: GET_USER,
+  //     payload: res.data
+  //   })
+  // };
 
   //App Class to Function Component - 3:22 same thing with repos, we use setLoading and setRepos useState hooks.
   const getUserRepos = async (username) => {
@@ -88,7 +89,7 @@ const [alert, setAlert] = useState(null);
     setLoading(false);
   };
 
-//4:31 We want to clearUsers and copy and paste that into GithubState. (4:47 go to GithubState.js) 
+//Moving User State To Context -4:31 We want to clearUsers and copy and paste that into GithubState. (4:47 go to GithubState.js) 
 // //App Class to Function Component - 3:55 for clearUsers we do the same thing but except it's "setUsers".
 // const clearUsers = async () => {
 //     setUsers([]);
@@ -124,12 +125,12 @@ const showAlert = (msg, type) => {
                   <Fragment>
 {/*Moving User State To Context - 00:00   */}
                     <Search
-                      clearUsers={clearUsers}
-                      showClear={users.length > 0 ? true : false}
+                      // clearUsers={clearUsers}
+                      // showClear={users.length > 0 ? true : false}
                       setAlert={showAlert}
                     />
-{/*00:44 we want to get rid of both of these users and loading because now these are part of the "app level state" part of context. So we can just reach in to the context and grab that stuff rather than having to pass it in. 00:58 let's go to Users.js*/}
-                    <Users loading={loading} users={users} />
+{/*Moving User State To Context - 00:44 we want to get rid of both of these users and loading because now these are part of the "app level state" part of context. So we can just reach in to the context and grab that stuff rather than having to pass it in. 00:58 let's go to Users.js*/}
+                    <Users  />
                   </Fragment>
                 )}
               />
@@ -139,13 +140,13 @@ const showAlert = (msg, type) => {
               <Route
                 exact path='/user/:login'
                 render={(props) => (
+//Moving User State To Context - 10:27 "getUser={getUser}" has to be deleted since we have finally removed this from the class based components, to context and hooks.user={user},loading={loading} should also be removed. Scroll up and get rid the state of user "const [user, setUser] = useState({});" and state of loading, "const [loading, setLoading] = useState(false);".  get rid of that. (11:07 go to users/User.js)
                    <User
                     {...props}
-                    getUser={getUser}
+            
                     getUserRepos={getUserRepos}
-                    user={user}
                     repos = {repos}
-                    loading={loading}
+                    
                   />
                 )}
               />
