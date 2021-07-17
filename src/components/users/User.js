@@ -10,10 +10,10 @@ import GithubContext from "../../context/github/githubContext";
 // User Class to Function With useEffect Hook - 00:42 lets convert this to a functional component, arrow function. 
 
 //User Class to Function With useEffect Hook - 1:33 We are going to leave in the "const {}" with the giant list starting with "name, company...". But we still need to destructure it users and such.  We could just destructure that giant list in the parameter, but instead, we will just leave this outside of the parameter and leave the destructuring in the method.  2:12 We also want to bring in "match", so it goes from "this.props.match.params.login" to "match.params.login".
-const User = ({ getUserRepos, repos, match}) => {
+const User = ({ match}) => {
 //Moving User State To Context - 12:42 scroll down and define the githubContext with the three variables. 12:45 He begans explaining how user, loading and getUser is working. We want to put it here, since we are using "getUser" in useEffect. 13:49 we also forgot to set githubContext = useContext(); like we do in other places. 14:24 don't forget to put getUser in GithubState.js, GithubContext.Provider was the place.  
 const githubContext = useContext(GithubContext);
-const {getUser, loading, user } = githubContext;
+const {getUser, loading, user, repos, getUserRepos } = githubContext;
 
 //User Class to Function With useEffect Hook - 3:05 the last thing we want to do, is how do we get "componentDidMount"? We use useEffect. 3:19 Inside the useEffect, when we pass in the arrowFunction, do not forget the {} after the "=>" arrow, because you don't want to run stuff directly in there. 
 //User Class to Function With useEffect Hook - 4:14 IMPORTANT There is something to be mentioned, so if you look at the network tab, it keeps making requests, it's going on a loop. Basically, it runs on any update and when we run get user or get repos, it's updating the component so it constantly runs in a loop. The way we can stop that is simply by adding an empty set of brackets. In the brackets, we can define special conditions on when we want this to run. Like if the repos change, we can put that in there. Since we only want it to run one iteration, we just put an empty bracket in there. 
@@ -106,14 +106,15 @@ const {getUser, loading, user } = githubContext;
       </Fragment>
     );
 }
+//Moving Repos State To Context - 2:31 We no longer need to pass in "getUserRepos, repos," in the user function component. We no longer need propTypes here. 2:45 Put "repos" and "getUserRepos" into line 16 that is passing in those actions into githubContext. 2:49 explains how this works and how we pass this stuff into the user html and stuff dynamically. 3:14 go to App.js to remove the "useStates", except setAlert one. (End of Video)
 
-//User Class to Function With useEffect Hook - 1:00 underneath the function, we want to put in the propTypes and then chain it to User. "User.propTypes". 
-User.propTypes = {
-    loading: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired,
-    repos: PropTypes.array.isRequired,
-    getUser: PropTypes.func.isRequired,
-    getUserRepos: PropTypes.func.isRequired,
-};
+// //User Class to Function With useEffect Hook - 1:00 underneath the function, we want to put in the propTypes and then chain it to User. "User.propTypes". 
+// User.propTypes = {
+//     loading: PropTypes.bool.isRequired,
+//     user: PropTypes.object.isRequired,
+//     repos: PropTypes.array.isRequired,
+//     getUser: PropTypes.func.isRequired,
+//     getUserRepos: PropTypes.func.isRequired,
+// };
 
 export default User;

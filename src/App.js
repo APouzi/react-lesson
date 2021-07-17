@@ -7,7 +7,6 @@ import User from "./components/users/User";
 import Search from "./components/users/Search";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
-import axios from "axios";
 //Implementing Context - 10:59 Here we are going to be bring in our "GithubState"
 import GithubState from "./context/github/GithubState";
 
@@ -19,8 +18,8 @@ const App = () => {
 //Moving User State To Context - 8:44 Since we are no longer calling setUsers, we can remove it from here.
 // const [users, setUsers] = useState([]);
 // const [user, setUser] = useState({});
-const [repos, setRepos] = useState([]);
-const [loading, setLoading] = useState(false);
+// const [repos, setRepos] = useState([]);
+// const [loading, setLoading] = useState(false);
 const [alert, setAlert] = useState(null);
 
 
@@ -76,18 +75,21 @@ const [alert, setAlert] = useState(null);
   //   })
   // };
 
-  //App Class to Function Component - 3:22 same thing with repos, we use setLoading and setRepos useState hooks.
-  const getUserRepos = async (username) => {
-    setLoading(true);
-    const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`, {
-    headers: {
-      Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
-    },
-    }
-    );
-    setRepos(res.data);
-    setLoading(false);
-  };
+
+  //Moving Repos State To Context - 00:17 we are going to take this "getUserRepos" and copy and comment it out. Then after this, scroll down to the "User" component
+  // //App Class to Function Component - 3:22 same thing with repos, we use setLoading and setRepos useState hooks.
+  // const getUserRepos = async (username) => {
+  //   setLoading(true);
+  //   const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`, {
+  //   headers: {
+  //     Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
+  //   },
+  //   }
+  //   );
+  //   setRepos(res.data);
+  //   setLoading(false);
+  // };
+
 
 //Moving User State To Context -4:31 We want to clearUsers and copy and paste that into GithubState. (4:47 go to GithubState.js) 
 // //App Class to Function Component - 3:55 for clearUsers we do the same thing but except it's "setUsers".
@@ -138,17 +140,15 @@ const showAlert = (msg, type) => {
               <Route exact path="/about" component={About} />
 
               <Route
-                exact path='/user/:login'
-                render={(props) => (
-//Moving User State To Context - 10:27 "getUser={getUser}" has to be deleted since we have finally removed this from the class based components, to context and hooks.user={user},loading={loading} should also be removed. Scroll up and get rid the state of user "const [user, setUser] = useState({});" and state of loading, "const [loading, setLoading] = useState(false);".  get rid of that. (11:07 go to users/User.js)
-                   <User
-                    {...props}
-            
-                    getUserRepos={getUserRepos}
-                    repos = {repos}
-                    
-                  />
-                )}
+                exact path='/user/:login' component = {User}
+//Moving Repos State To Context - 00:37 we no longer need  render={(props), we can just use a component = {User}, instead of the return. So it should look like line 141, the other Route. (00:57 go to GithubState.js)
+
+//                 render={(props) => (
+////Moving User State To Context - 10:27 "getUser={getUser}" has to be deleted since we have finally removed this from the class based components, to context and hooks.user={user},loading={loading} should also be removed. Scroll up and get rid the state of user "const [user, setUser] = useState({});" and state of loading, "const [loading, setLoading] = useState(false);".  get rid of that. (11:07 go to users/User.js)
+//                    <User
+//                     {...props}
+//                   />
+//                 )}
               />
             </Switch>
           </div>

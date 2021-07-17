@@ -48,6 +48,7 @@ const GithubState = (props) => {
     });
   };
 
+
   // Get User
 //Moving User State To Context - 9:06 Here we will be getting  
   const getUser = async (username) => {
@@ -67,8 +68,26 @@ const GithubState = (props) => {
         payload: res.data
       })
     };
-  // Get Repos
 
+   
+  //Get Repos
+ //Moving Repos State To Context - 00:57 paste the getUserRepos here. "setLoading(true); > setLoading();".
+ const getUserRepos = async (username) => {
+    setLoading();
+    const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`, {
+    headers: {
+      Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
+    },
+    }
+    );
+//Moving Repos State To Context - 1:17 isntead of having the two methods, like we had before, we want to dispatch(), like we always do. that returns an object with "type: GET_REPOS, payload: res.data". 1:38 go to the githubReducer.js
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data
+    })
+  };
+
+ 
   //Moving User State To Context - 4:47 Here we paste the "clear users" function. Now we want to do something a little different here. With all our actions, we want to dispatch to our producer. So we have a type called "CLEAR_USERS". So I just want to dispatch() and dispatch an object with the type of CLEAR_USERS. (5:19 go to the githubReducer)
   const clearUsers = () => dispatch({type: CLEAR_USERS});
   // // Clear Users
@@ -96,7 +115,8 @@ const GithubState = (props) => {
         loading: state.loading,
         searchUsers,
         clearUsers,
-        getUser
+        getUser, 
+        getUserRepos
       }}
     >
       {props.children}

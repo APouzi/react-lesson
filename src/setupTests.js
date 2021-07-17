@@ -68,3 +68,5 @@ import '@testing-library/jest-dom';
 //Create Reducer & Actions - 00:00 now we want to basically move everything from App.js to our Context into our state. And we want to have a reducer that's going to basically change the state of certain components that need changing when something happens. 00:21 If you look at the react tools. Essentially there is nothing in the user array, because we haven't implemented them within our application. One by one we move all the methods like "searchUsers" and move them to GithubState and then we connect to conect within each component using "useContext" hook and we have to have some reducer functions. (1:35 go to App.js)
 
 //Moving User State To Context - 00:00 So right now, the users aren't actually showing because the users are now coming from, well, they coming from the GitHub API, but they're going into our GitHubState provider here, as you can see. They're not listed here because this component isn't actually reaching into our GitHub state. (00:37 go to App.js to the "<User/>") 
+
+// Moving Repos State To Context - 00:00 (go to App.js)
