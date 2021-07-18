@@ -71,7 +71,7 @@ import '@testing-library/jest-dom';
 
 // Moving Repos State To Context - 00:00 (go to App.js)
 
-// Alert Context Workflow - 00:00 Now we just need to take care of the alert because remember, we have an alert state in our app. Now, I'm going to actually make a whole new context for alerts. We only have this one method and one piece of state. However, this gives you an idea of how you can break your global state up into resources. You don't have to squish everything into one single context. 00:38 In the context folder, I am going to create a folder called "alert" and inside there we are going to create the same three files that github does. "AlertState.js", "alertContext.js", "alertReducer.js".  1:05 Our context is simple,
+// Alert Context Workflow - 00:00 Now we need to take care of the alert because remember, we have an alert state in our app. Now, I'm going to actually make a whole new context for alerts.(00:18 go to Alert.js)
 
 // Home & NotFound Components - 00:00 
 

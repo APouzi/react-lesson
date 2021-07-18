@@ -1,12 +1,16 @@
-//Alert State & Component - 4:31 we are going to do an "racfe" so we get the export at the bottom. This function is going to take in the alert, which is an object with a message and type.we want to make sure that alert is not null in order to show this or else it'll just show the background without the text and other data.
-import React from 'react'
+import React, { useContext } from 'react'
+import AlertContext from '../../context/alert/alertContext';
 
-const Alert = ({alert}) => {
-//Alert State & Component - 4:59 inside the return, get rid of the div tags, we are going to say "as long as alert is not equal to null, then we want to show a div." Inside that div tag, we want some styling, so we are going to have to set the className to react curly brackets and inside those, we need backticks `` and set it to "alert alert-${alert.type}". Remember we are passing in "alert" and alert has the "type" we want
+//Alert Context Workflow - 8:24 We are no longer passing in "{alert}" as a prop. We need to bring in our AlertContext 
+const Alert = () => {
+//Alert Context Workflow - 8:52 We need to bring in our context. Just like we did with the GitHub context, we're going to initialize it. We also need to bring in useContext into our import in React
+const alertContext = useContext(AlertContext);
+
+//Alert Context Workflow - 9:35 to make it easy for ourselves, lets destructure and pull out alert and assign it to alertContext, so we don't have to keep rephrasing certain things. 9:54 remove "{alert}". (10:08 go to Search.js)
+const {alert} = alertContext;
     return (
         alert !== null && (
             <div className = {`alert alert-${alert.type}`}>
-{/*Alert State & Component - 6:14 inside the div want an i tag, with a className that has stlying and inside that, we want the message from the alert. We want this displayed in App.js (6:37 go to App.js) */}
                 <i className="fas fa-info-circle">
                     {alert.msg}
                 </i>
@@ -15,4 +19,6 @@ const Alert = ({alert}) => {
     )
 }
 
-export default Alert
+export default Alert;
+
+//Alert Context Workflow - 00:20 We only have this one method and one piece of state. However, this gives you an idea of how you can break your global state up into resources. You don't have to squish everything into one single context. 00:38 In the context folder, I am going to create a folder called "alert" and inside there we are going to create the same three files that github does. "AlertState.js", "alertContext.js", "alertReducer.js".  1:05 Our context is simple, copy from the "githubContext.js" and paste it into "alertContext.js" (1:14 go to alertContext.js) 

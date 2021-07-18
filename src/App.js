@@ -1,5 +1,5 @@
 //App Class to Function Component - 00:14 lets get rid of component, and bring in "useState". Change the App to functional component. 
-import React, { Fragment, useState } from "react";
+import React, { Fragment} from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Users from "./components/users/Users";
@@ -9,6 +9,9 @@ import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
 //Implementing Context - 10:59 Here we are going to be bring in our "GithubState"
 import GithubState from "./context/github/GithubState";
+//Alert Context Workflow - 4:08 Here we will copy and paste this down and change it to AlertState then scroll down 4:19
+import AlertState from "./context/alert/AlertState";
+ 
 
 import "./App.css";
 import { GET_USER } from "./context/types";
@@ -20,7 +23,7 @@ const App = () => {
 // const [user, setUser] = useState({});
 // const [repos, setRepos] = useState([]);
 // const [loading, setLoading] = useState(false);
-const [alert, setAlert] = useState(null);
+// const [alert, setAlert] = useState(null);
 
 
   // state = {
@@ -98,13 +101,17 @@ const [alert, setAlert] = useState(null);
 //     setLoading(false);
 //   };
 
-//App Class to Function Component - 4:21 instead of "this.setState({ alert: { msg, type } });" we just do a setAlert({ msg, type }). 
-//App Class to Function Component - 6:45 change name from setAlert to showAlert and change the method from "setAlert={setAlert}" to "setAlert={showAlert}". Next we will be implementing Context (END OF VIDEO)
-const showAlert = (msg, type) => {
-    setAlert({ msg, type });
-    //For the alert, just replace  "this.setState({ alert: null })" with a "setAlert(null)"
-    setTimeout(() => setAlert(null), 5000);
-  };
+
+
+//Alert Context Workflow - 4:39 Get rid of the showAlert method. 4:37 He starts getting rid of alot of stuff.setAlert={showAlert}, alert={alert}.  so basically we got rid of all those props. We were passing back and forth and up and down. (4:57 go to AlertState.js)
+
+// //App Class to Function Component - 4:21 instead of "this.setState({ alert: { msg, type } });" we just do a setAlert({ msg, type }). 
+// //App Class to Function Component - 6:45 change name from setAlert to showAlert and change the method from "setAlert={setAlert}" to "setAlert={showAlert}". Next we will be implementing Context (END OF VIDEO)
+// const showAlert = (msg, type) => {
+//     setAlert({ msg, type });
+//     //For the alert, just replace  "this.setState({ alert: null })" with a "setAlert(null)"
+//     setTimeout(() => setAlert(null), 5000);
+//   };
 
 
 
@@ -113,11 +120,13 @@ const showAlert = (msg, type) => {
     return (
 //Implementing Context - 11:25 The methods above are going to go into the GithubState, but we are going to do the GithubState wrap here. Now the GithubState file is implemented. 12:05 So throughout the next few videos, what we want to do is move everything, all this stuff, including the state here we want to move to our app level state, which is this file here, and then any changes that are made to the state are going to go through the reducer, which we haven't added anything to yet. (END OF VIDEO)
 <GithubState>
+{/*Alert Context Workflow - 4:19 Right here we are going to be putting AlertState provider and wrap the entirety of this*/}
+  <AlertState>
       <Router>
         <div className="App">
           <Navbar />
           <div className="container">
-            <Alert alert={alert} />
+            <Alert  />
             <Switch>
               <Route
                 exact
@@ -129,7 +138,7 @@ const showAlert = (msg, type) => {
                     <Search
                       // clearUsers={clearUsers}
                       // showClear={users.length > 0 ? true : false}
-                      setAlert={showAlert}
+                      
                     />
 {/*Moving User State To Context - 00:44 we want to get rid of both of these users and loading because now these are part of the "app level state" part of context. So we can just reach in to the context and grab that stuff rather than having to pass it in. 00:58 let's go to Users.js*/}
                     <Users  />
@@ -154,6 +163,7 @@ const showAlert = (msg, type) => {
           </div>
         </div>
       </Router>
+      </AlertState>
       </GithubState>
     );
 }
