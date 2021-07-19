@@ -1,12 +1,18 @@
 //App Class to Function Component - 00:14 lets get rid of component, and bring in "useState". Change the App to functional component. 
-import React, { Fragment} from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
-import Users from "./components/users/Users";
+// import Users from "./components/users/Users";
 import User from "./components/users/User";
-import Search from "./components/users/Search";
+//Home & NotFound Components - 00:36 First, we are going to be creating a new file in "pages" called "home.js" which is going to take care of the "Users" and "Search" fragments. Copy and paste Search&User import into the new folder (00:48 go to Home.js)
+// import Search from "./components/users/Search";
 import Alert from "./components/layout/Alert";
+//Home & NotFound Components - 2:02 Now lets import in the home component
+import Home from "./components/pages/Home";
 import About from "./components/pages/About";
+//Home & NotFound Components - 3:51 Lets bring in the not found component
+import NotFound from "./components/pages/NotFound";
+
 //Implementing Context - 10:59 Here we are going to be bring in our "GithubState"
 import GithubState from "./context/github/GithubState";
 //Alert Context Workflow - 4:08 Here we will copy and paste this down and change it to AlertState then scroll down 4:19
@@ -131,19 +137,17 @@ const App = () => {
               <Route
                 exact
                 path="/"
-                render={(props) => (
-//Create Reducer & Actions - 7:57 down here, where we have our search component, we were passing in "searchUsers={searchUsers}", we no longer have to do that. Since we can access it through context. (8:12 go to Search.js in componets/users)
-                  <Fragment>
-{/*Moving User State To Context - 00:00   */}
-                    <Search
-                      // clearUsers={clearUsers}
-                      // showClear={users.length > 0 ? true : false}
-                      
-                    />
-{/*Moving User State To Context - 00:44 we want to get rid of both of these users and loading because now these are part of the "app level state" part of context. So we can just reach in to the context and grab that stuff rather than having to pass it in. 00:58 let's go to Users.js*/}
-                    <Users  />
-                  </Fragment>
-                )}
+                component = {Home}
+//Home & NotFound Components - 2:21 Lets get rid of the render of the frament with the User and Search. Instead lets just put in "component = {Home}", Now we can remove Fragment from React import. 3:14 Now we are going to create a file called "NotFound.js" in pages folder (3:19 go to NotFound.js)
+
+//                 render={(props) => (
+////Create Reducer & Actions - 7:57 down here, where we have our search component, we were passing in "searchUsers={searchUsers}", we no longer have to do that. Since we can access it through context. (8:12 go to Search.js in componets/users)
+//                   <Fragment>
+//                     <Search/>
+//{/*Moving User State To Context - 00:44 we want to get rid of both of these users and loading because now these are part of the "app level state" part of context. So we can just reach in to the context and grab that stuff rather than having to pass it in. 00:58 let's go to Users.js*/}
+//                     <Users />
+//                   </Fragment>
+//                 )}
               />
 
               <Route exact path="/about" component={About} />
@@ -159,6 +163,8 @@ const App = () => {
 //                   />
 //                 )}
               />
+{/*Home & NotFound Components - 4:00 All we have to do to bring in notfound, is a route at the very end (END OF VIDEO) Answer on how this works: https://www.udemy.com/course/modern-react-front-to-back/learn/lecture/14969896#questions/12308342 */}
+              <Route component={NotFound}/>
             </Switch>
           </div>
         </div>

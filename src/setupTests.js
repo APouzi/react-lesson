@@ -73,6 +73,6 @@ import '@testing-library/jest-dom';
 
 // Alert Context Workflow - 00:00 Now we need to take care of the alert because remember, we have an alert state in our app. Now, I'm going to actually make a whole new context for alerts.(00:18 go to Alert.js)
 
-// Home & NotFound Components - 00:00 
+// Home & NotFound Components - 00:00  I don't like how this how we have this route and we have the render and props in(in App.js), you know, two components. What I'd like to do is just simply create a home component within our pages folder and just link that and have these embedded in that. Another thing is I'd like to create a "not found" components when we have blank pages or something. (00:35 go to App.js)
 
 // --------------------------------------------END of this Project-------------------------------------------------------------------------
